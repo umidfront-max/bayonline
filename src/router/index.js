@@ -11,46 +11,37 @@ const router = createRouter({
          children: [
             {
                path: '',
-               name: 'buyer',
-               component: () => import('../views/Buyer.vue'),
+               name: 'main',
+               component: () => import('../views/Main.vue'),
             },
             {
                path: '/buyer/:id',
                name: 'buyerId',
                component: () => import('../views/SingleBuyer.vue'),
             },
-            {
-               path: '/vakancy',
-               name: 'vakancy',
-               component: () => import('../views/Vakancy.vue'),
-            },
-            {
-               path: '/vakancy/:id',
-               name: 'vakancyId',
-               component: () => import('../views/SingleVakancy.vue'),
-            },
-            {
-               path: '/offer/:id',
-               name: 'offer',
-               component: () => import('../views/Offers.vue'),
-            }
+
+
          ]
       },
       {
          path: '/about',
          name: 'about',
-         // route level code-splitting
-         // this generates a separate chunk (About.[hash].js) for this route
-         // which is lazy-loaded when the route is visited.
          component: () => import('../views/AboutView.vue'),
       },
       {
-         path: '/login',
-         name: 'login',
-         // route level code-splitting
-         // this generates a separate chunk (About.[hash].js) for this route
-         // which is lazy-loaded when the route is visited.
-         component: () => import('../views/Login.vue'),
+         path: '/account',
+         name: 'Account',
+         component: () => import('../views/Account.vue'),
+      },
+      {
+         path: '/merchant',
+         name: 'merchant',
+         component: () => import('../views/merchant/LoginMerchant.vue'),
+      },
+      {
+         path: '/client',
+         name: 'client',
+         component: () => import('../views/merchant/LoginMerchant.vue'),
       },
       {
          path: '/dashboard',

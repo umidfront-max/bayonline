@@ -1,233 +1,143 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import MenuModal from './MenuModal.vue'
-import ByModal from './ByModal.vue'
-import SearchModal from './SearchModal.vue'
+import { useRouter, useRoute } from 'vue-router'
 
-const _search = ref()
-const modalRef = ref(null)
-const buyerRef = ref(null)
-const searchRef = ref(null)
-
-const openModal = () => {
-  modalRef.value.open()
-}
-
-// Asosiy menyu
-const menuItems = ['Biz haqimizda', 'Fakultetlar', 'Talabalar', 'Yangiliklar', 'Vakansiyalar']
-
-// Submenyu faqat “Fakultetlar” uchun
-const facultyItems = [
-  'Kompyuter injiniringi',
-  'Dasturiy injiniring',
-  'Telekommunikatsiya texnologiyalari',
-  'Axborot xavfsizligi',
-  'Axborot tizimlari',
-  'Multimedia texnologiyalari',
-]
-
-const showFaculty = ref(false)
-const showFacultyInModal = ref(false)
-const activeItem = ref('Biz haqimizda')
+type MenuItem = { label: string; to: string }
 
 const router = useRouter()
 const route = useRoute()
-const lang = ref('UZ')
 
-function toggleLang() {
-  lang.value = lang.value === 'UZ' ? 'EN' : 'UZ'
+const menus = ref<MenuItem[]>([
+  { label: 'О сервисе', to: '/about' },
+  { label: 'Как это работает', to: '/how' },
+  { label: 'Партнеры', to: '/partners' },
+  { label: 'Вопросы', to: '/faq' },
+  { label: 'Контакты', to: '/contacts' },
+])
+
+const lang = ref<'RU' | 'UZ' | 'EN'>('RU')
+
+const isActive = (to: string) => route.path === to
+
+function go(to: string) {
+  router.push(to)
 }
-function handleRoute(item) {
-  activeItem.value = item
-  if (activeItem.value == 'Vakansiyalar') {
-    router.push('vakancy')
-  }
+
+function setLang(v: 'RU' | 'UZ' | 'EN') {
+  lang.value = v
+  // Agar sizda i18n bo'lsa shu yerda almashtirasiz:
+  // locale.value = v.toLowerCase()
 }
 </script>
 
 <template>
-  <div class="bg-black-700 text-white">
-    <header class="flex items-center container !py-5 justify-between">
-      <!-- Logo -->
-      <div @click="router.push('/')" class="flex gap-3 cursor-pointer items-center">
-        <img class="max-xl:h-5" src="@/assets/img/logo1.png" alt="TUIT logo" />
-        <p class="font-semibold text-lg">TUIT</p>
-      </div>
+  <header class="sticky top-0 z-50 w-full bg-white/90 backdrop-blur border-b border-black/10">
+    <div class="container mx-auto px-4">
+      <div class="h-16 flex items-center justify-between">
+        <!-- LEFT: Logo -->
+        <div class="flex items-center gap-3 cursor-pointer select-none" @click="go('/')">
+          <div class="w-10 h-10 rounded-md bg-emerald-500 grid place-items-center">
+            <span class="text-white font-bold text-lg leading-none">B</span>
+          </div>
+          <span class="text-2xl font-extrabold tracking-wide text-emerald-600">BAY</span>
+        </div>
 
-      <!-- Navigation -->
-      <nav class="flex max-[970px]:hidden gap-6 relative">
-        <div
-          v-for="item in menuItems"
-          :key="item"
-          class="relative"
-          @mouseenter="item === 'Fakultetlar' && (showFaculty = true)"
-          @mouseleave="item === 'Fakultetlar' && (showFaculty = false)"
-        >
-          <!-- Main item -->
+        <!-- CENTER: Menu -->
+        <nav class="hidden md:flex items-center gap-8">
           <button
-            @click="handleRoute(item)"
-            class="relative flex items-center gap-1 text-sm text-gray-400 hover:text-white transition-colors pb-1 group"
-            :class="activeItem === item && 'text-white'"
+            v-for="m in menus"
+            :key="m.to"
+            @click="go(m.to)"
+            class="relative text-[15px] font-medium text-slate-700 hover:text-emerald-600 transition-colors duration-300 after:content-[''] after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-emerald-600 after:transition-all after:duration-300 hover:after:w-full"
+            :class="isActive(m.to) ? 'text-emerald-600 after:w-full' : ''"
           >
-            {{ item }}
-
-            <!-- faqat Fakultetlar uchun pastga o‘q -->
-            <svg
-              v-if="item === 'Fakultetlar'"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-3 h-3 transition-transform duration-300"
-              :class="showFaculty ? 'rotate-180' : 'rotate-0'"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-
+            {{ m.label }}
+          </button>
+        </nav>
+        <div class="flex gap-6 items-center">
+          <button
+            @click="router.push('/account')"
+            class="group relative cursor-pointer h-10 rounded-xl px-10 font-semibold text-white bg-emerald-600 overflow-hidden transition-all duration-300 hover:shadow-xl shadow-emerald-600/20"
+          >
+            <!-- hover gradient effect -->
             <span
-              class="absolute left-1/2 -bottom-0.5 h-[2px] bg-orange-500 transition-all duration-300 transform -translate-x-1/2"
-              :class="activeItem === item ? 'w-full' : 'w-0 group-hover:w-full'"
+              class="absolute inset-0 bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             ></span>
+
+            <span class="relative z-10">Вход</span>
           </button>
 
-          <!-- Fakultetlar submenyusi -->
-          <transition
-            enter-active-class="transition duration-300 ease-out"
-            enter-from-class="opacity-0 -translate-y-2"
-            enter-to-class="opacity-100 translate-y-0"
-            leave-active-class="transition duration-200 ease-in"
-            leave-from-class="opacity-100 translate-y-0"
-            leave-to-class="opacity-0 -translate-y-2"
-          >
-            <div
-              v-if="item === 'Fakultetlar' && showFaculty"
-              class="absolute w-60 top-full left-0 mt-2 bg-black-800 shadow-lg rounded-lg p-3 flex flex-col gap-2 z-50"
-            >
+          <!-- RIGHT: Lang switch -->
+          <div class="flex items-center gap-2">
+            <div class="p-1 rounded-xl border border-black/10 bg-white">
               <button
-                v-for="faculty in facultyItems"
-                :key="faculty"
-                @click="activeItem = faculty"
-                class="text-gray-300 hover:text-white transition-colors text-sm pb-1 group"
-                :class="activeItem === faculty && 'text-white'"
+                type="button"
+                class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors"
+                :class="
+                  lang === 'RU' ? 'bg-emerald-500 text-white' : 'text-slate-700 hover:bg-black/5'
+                "
+                @click="setLang('RU')"
               >
-                {{ faculty }}
-                <span
-                  class="absolute left-1/2 -bottom-0.5 h-[2px] bg-orange-500 transition-all duration-300 transform -translate-x-1/2"
-                  :class="activeItem === faculty ? 'w-full' : 'w-0 group-hover:w-full'"
-                ></span>
+                RU
+              </button>
+              <button
+                type="button"
+                class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors"
+                :class="
+                  lang === 'UZ' ? 'bg-emerald-500 text-white' : 'text-slate-700 hover:bg-black/5'
+                "
+                @click="setLang('UZ')"
+              >
+                UZ
+              </button>
+              <button
+                type="button"
+                class="px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors"
+                :class="
+                  lang === 'EN' ? 'bg-emerald-500 text-white' : 'text-slate-700 hover:bg-black/5'
+                "
+                @click="setLang('EN')"
+              >
+                EN
               </button>
             </div>
-          </transition>
-        </div>
-      </nav>
 
-      <!-- Right side -->
-      <div class="flex gap-2 items-center">
-        <!-- Til tugmasi -->
-        <button
-         @click="router.push('/login')"
-          class="px-4 py-2 rounded-2xl text-white bg-green-600 hover:bg-green-500 transition-colors max-xl:text-xs"
-        >
-          Tizimga kirish
-        </button>
-
-        <!-- Qidiruv -->
-        <div
-          class="w-40 max-[970px]:hidden h-10 flex justify-between bg-black-800 p-2 px-4 rounded-full"
-        >
-          <input
-            class="text-white w-full text-sm outline-0 bg-transparent border-0"
-            placeholder="Qidirish..."
-            v-model="_search"
-            type="text"
-          />
-          <img class="h-full" src="@/assets/img/search.svg" alt="search" />
-        </div>
-
-        <!-- Mobil menyu -->
-        <button
-          @click="openModal"
-          class="max-xl:w-8 cursor-pointer max-xl:h-6.5 bg-black-800 rounded-full hidden max-[970px]:flex justify-center items-center"
-        >
-          <img src="@/assets/img/category.svg" alt="menu" />
-        </button>
-      </div>
-    </header>
-
-    <!-- Mobile Modal -->
-    <MenuModal ref="modalRef">
-      <nav class="flex flex-col gap-3 mt-6">
-        <div v-for="item in menuItems" :key="item">
-          <button
-            class="relative flex items-center justify-between text-sm w-full text-gray-400 hover:text-white pb-1 group"
-            @click.stop="item === 'Fakultetlar' && (showFacultyInModal = !showFacultyInModal)"
-          >
-            <div class="flex gap-2 items-center">
-              <span>{{ item }}</span>
-              <svg
-                v-if="item === 'Fakultetlar'"
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-3 h-3 transition-transform duration-300"
-                :class="showFacultyInModal ? 'rotate-180' : 'rotate-0'"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            <button
+              type="button"
+              class="md:hidden w-10 h-10 rounded-xl border border-black/10 hover:bg-black/5 grid place-items-center"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 7h16M4 12h16M4 17h16"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
               </svg>
-            </div>
-          </button>
-
-          <transition
-            enter-active-class="transition duration-300 ease-out"
-            enter-from-class="opacity-0 -translate-y-2"
-            enter-to-class="opacity-100 translate-y-0"
-          >
-            <div
-              v-if="item === 'Fakultetlar' && showFacultyInModal"
-              class="pl-4 mt-2 flex flex-col gap-2"
-            >
-              <button
-                v-for="faculty in facultyItems"
-                :key="faculty"
-                class="text-gray-400 hover:text-white transition-colors text-sm pb-1"
-              >
-                {{ faculty }}
-              </button>
-            </div>
-          </transition>
+            </button>
+          </div>
         </div>
-      </nav>
-
-      <!-- Social icons -->
-      <div class="gap-4 border-t border-gray-500 pt-4 flex justify-end pr-1 mt-4">
-        <img
-          class="h-6.5 opacity-80 hover:opacity-100 duration-200"
-          src="@/assets/img/ins.svg"
-          alt=""
-        />
-        <img
-          class="h-6.5 opacity-80 hover:opacity-100 duration-200"
-          src="@/assets/img/soc.svg"
-          alt=""
-        />
-        <img
-          class="h-6.5 opacity-80 hover:opacity-100 duration-200"
-          src="@/assets/img/x.svg"
-          alt=""
-        />
-        <img
-          class="h-6.5 opacity-80 hover:opacity-100 duration-200"
-          src="@/assets/img/youtube.svg"
-          alt=""
-        />
       </div>
-    </MenuModal>
-
-    <ByModal ref="buyerRef" />
-    <SearchModal ref="searchRef" />
-  </div>
+    </div>
+  </header>
 </template>
+
+<style scoped>
+/* Vue + Tailwind bilan hover underline "pastdan yuqoriga" yaxshi ko‘rinishi uchun:
+   nav buttonlar uchun group kerak bo‘ladi. Shuni global qilamiz. */
+nav button {
+  position: relative;
+}
+nav button::before {
+  content: '';
+  display: none;
+}
+nav button {
+  /* Tailwind'da group-hover ishlashi uchun */
+}
+nav button {
+  /* Vue template'da classga group qo'shish osonroq, xohlasangiz pastdagi variantni ishlating:
+     class="group relative ..."
+  */
+}
+</style>

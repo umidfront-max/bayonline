@@ -1,140 +1,138 @@
-<script setup></script>
+<script setup lang="ts">
+const companyLinks = [
+  { label: 'О сервисе', href: '#about' },
+  { label: 'Как это работает', href: '#how-it-works' },
+  { label: 'Партнеры', href: '#partners' },
+]
+
+const legalLinks = [
+  { label: 'Политика конфиденциальности', href: '#' },
+  { label: 'Условия использования', href: '#' },
+  { label: 'FAQ', href: '#faq' },
+]
+</script>
 
 <template>
-  <div class="bg-black-700 text-white">
-    <footer
-      class="grid grid-cols-3 max-md:grid-cols-1 max-md:flex max-md:flex-col max-md:gap-8 !pt-10 !pb-12 container border-b border-black-600"
-    >
-      <!-- About TUIT -->
-      <div>
-        <h2 class="uppercase text-xl max-sm:text-base font-semibold italic">
-          Biz haqimizda
-        </h2>
-        <div class="flex flex-col gap-2 mt-3">
-          <a
-            class="text-sm text-gray-400 hover:text-white duration-300"
-            href="#!"
-          >
-            Universitet tarixi
-          </a>
-          <a
-            class="text-sm text-gray-400 hover:text-white duration-300"
-            href="#!"
-          >
-            Rahbariyat
-          </a>
-          <a
-            class="text-sm text-gray-400 hover:text-white duration-300"
-            href="#!"
-          >
-            Missiya va maqsad
-          </a>
-          <a
-            class="text-sm text-gray-400 hover:text-white duration-300"
-            href="#!"
-          >
-            Rasmiy hujjatlar
-          </a>
+  <footer id="contact" class="bg-slate-900 text-white">
+    <div class="container mx-auto px-4 py-12">
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <!-- Brand -->
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500">
+              <span class="text-xl font-bold">B</span>
+            </div>
+            <span class="text-2xl font-bold">BAY</span>
+          </div>
+
+          <p class="text-slate-400">Современный сервис онлайн рассрочки для покупок без переплат</p>
+        </div>
+
+        <!-- About -->
+        <div>
+          <h3 class="font-semibold mb-4">О компании</h3>
+          <ul class="space-y-2 text-slate-400">
+            <li v-for="l in companyLinks" :key="l.label">
+              <a :href="l.href" class="hover:text-emerald-400 transition-colors">
+                {{ l.label }}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div>
+          <h3 class="font-semibold mb-4">Правовая информация</h3>
+          <ul class="space-y-2 text-slate-400">
+            <li v-for="l in legalLinks" :key="l.label">
+              <a :href="l.href" class="hover:text-emerald-400 transition-colors">
+                {{ l.label }}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Support -->
+        <div>
+          <h3 class="font-semibold mb-4">Поддержка</h3>
+          <ul class="space-y-3 text-slate-400">
+            <li class="flex items-center gap-2">
+              <!-- phone -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-4 w-4"
+              >
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                />
+              </svg>
+
+              <a href="tel:+998712345678" class="hover:text-emerald-400 transition-colors">
+                +998 71 234 56 78
+              </a>
+            </li>
+
+            <li class="flex items-center gap-2">
+              <!-- mail -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-4 w-4"
+              >
+                <rect width="20" height="16" x="2" y="4" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+
+              <a href="mailto:info@bay.uz" class="hover:text-emerald-400 transition-colors">
+                info@bay.uz
+              </a>
+            </li>
+
+            <li class="flex items-start gap-2">
+              <!-- map -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-4 w-4 mt-1"
+              >
+                <path
+                  d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+                />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+
+              <span>Tashkent, Uzbekistan</span>
+            </li>
+          </ul>
         </div>
       </div>
 
-      <!-- Useful Links -->
-      <div>
-        <h2 class="uppercase text-xl max-sm:text-base font-semibold italic">
-          Foydali havolalar
-        </h2>
-        <div class="flex flex-col gap-2 mt-3">
-          <a
-            class="text-sm text-gray-400 hover:text-white duration-300"
-            href="#!"
-          >
-            Abituriyentlar uchun
-          </a>
-          <a
-            class="text-sm text-gray-400 hover:text-white duration-300"
-            href="#!"
-          >
-            Talabalar portali
-          </a>
-          <a
-            class="text-sm text-gray-400 hover:text-white duration-300"
-            href="#!"
-          >
-            Elektron kutubxona
-          </a>
-          <a
-            class="text-sm text-gray-400 hover:text-white duration-300"
-            href="#!"
-          >
-            Ilmiy faoliyat
-          </a>
-          <a
-            class="text-sm text-gray-400 hover:text-white duration-300"
-            href="#!"
-          >
-            Yangiliklar
-          </a>
-        </div>
+      <!-- bottom -->
+      <div class="mt-12 pt-8 border-t border-slate-800 text-center text-slate-400">
+        <p>© 2024 BAY. Все права защищены.</p>
       </div>
-
-      <!-- Contact -->
-      <div>
-        <h2 class="uppercase text-xl max-sm:text-base font-semibold italic">
-          Aloqa
-        </h2>
-        <div class="flex flex-col gap-2 mt-3 text-sm text-gray-400">
-          <p>
-            <strong>Manzil:</strong> Toshkent shahri, Amir Temur ko‘chasi, 108
-          </p>
-          <p>
-            <strong>Telefon:</strong>
-            <a href="tel:+998712380610" class="hover:text-white duration-300"
-              >+998 (71) 238-06-10</a
-            >
-          </p>
-          <p>
-            <strong>Email:</strong>
-            <a href="mailto:info@tuit.uz" class="hover:text-white duration-300"
-              >info@tuit.uz</a
-            >
-          </p>
-          <p>
-            <strong>Ish vaqti:</strong> Dushanba - Juma, 9:00 - 18:00
-          </p>
-        </div>
-
-        <!-- Social icons -->
-        <div
-          class="gap-4 flex justify-start pr-1 mt-6"
-        >
-          <img
-            class="h-6 opacity-80 hover:opacity-100 duration-200"
-            src="@/assets/img/ins.svg"
-            alt="Instagram"
-          />
-          <img
-            class="h-6 opacity-80 hover:opacity-100 duration-200"
-            src="@/assets/img/soc.svg"
-            alt="Facebook"
-          />
-          <img
-            class="h-6 opacity-80 hover:opacity-100 duration-200"
-            src="@/assets/img/x.svg"
-            alt="X (Twitter)"
-          />
-          <img
-            class="h-6 opacity-80 hover:opacity-100 duration-200"
-            src="@/assets/img/youtube.svg"
-            alt="YouTube"
-          />
-        </div>
-      </div>
-    </footer>
-
-    <!-- Bottom bar -->
-    <div class="flex justify-between items-center container !py-4 text-gray-400 text-xs max-sm:flex-col max-sm:gap-2">
-      <p>© 2025 — Toshkent Axborot Texnologiyalari Universiteti</p>
-      <a href="#!" class="hover:text-white duration-300">Maxfiylik siyosati</a>
     </div>
-  </div>
+  </footer>
 </template>
