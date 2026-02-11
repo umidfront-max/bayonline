@@ -48,11 +48,6 @@ const router = createRouter({
          name: 'dashboard',
          component: () => import('../views/Dashboard.vue'),
       },
-      {
-         path: '/employee',
-         name: 'employee',
-         component: () => import('../views/Employee.vue'),
-      },
    ],
 })
 

@@ -19,7 +19,6 @@
         <p>Bosh sahifaga</p>
       </div>
       <router-link class="bg-[#445] px-3 py-1 rounded-lg" to="/dashboard">Vakansiya</router-link>
-      <router-link class="bg-[#445] px-3 py-1 border border-black rounded-lg" to="/employee">Kandidantlar</router-link>
     </div>
     <h2 class="text-3xl font-bold my-8 text-center">🧑‍💼 Vakansiyalarni boshqarish</h2>
 
