@@ -14,20 +14,9 @@ const router = createRouter({
                name: 'main',
                component: () => import('../views/Main.vue'),
             },
-            {
-               path: '/buyer/:id',
-               name: 'buyerId',
-               component: () => import('../views/SingleBuyer.vue'),
-            },
-
-
          ]
       },
-      {
-         path: '/about',
-         name: 'about',
-         component: () => import('../views/AboutView.vue'),
-      },
+
       {
          path: '/account',
          name: 'Account',

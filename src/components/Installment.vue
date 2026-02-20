@@ -80,7 +80,7 @@ function iconSvg(name: Step['icon']) {
 </script>
 
 <template>
-  <section id="how-it-works" class="py-20 bg-slate-50">
+  <section id="how" class="py-20 bg-slate-50">
     <div class="container mx-auto px-4">
       <div class="text-center mb-16">
         <h2 class="text-3xl font-bold text-slate-900 sm:text-4xl mb-4">Как получить рассрочку</h2>

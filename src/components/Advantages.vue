@@ -74,7 +74,7 @@ function iconSvg(name: Benefit['icon']) {
 </script>
 
 <template>
-  <section id="about" class="py-20 bg-white">
+  <section class="py-20 bg-white">
     <div class="container mx-auto px-4">
       <div class="text-center mb-16">
         <h2 class="text-3xl font-bold text-slate-900 sm:text-4xl mb-4">Преимущества BAY</h2>

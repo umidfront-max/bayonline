@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import BayVideo from '@/components/BayVideo.vue'
 import Advantages from '@/components/Advantages.vue'
 import Installment from '@/components/Installment.vue'
 import Partners from '@/components/Partners.vue'
@@ -21,7 +22,7 @@ const tiles = computed<Tile[]>(() =>
 
 <template>
   <!-- FULL background -->
-  <section class="relative w-full overflow-hidden bg-[#F3FAF7]">
+  <section id="about" class="relative w-full overflow-hidden bg-[#F3FAF7]">
     <!-- soft glow -->
     <div class="pointer-events-none absolute inset-0">
       <div
@@ -168,6 +169,7 @@ const tiles = computed<Tile[]>(() =>
   <Advantages />
   <Installment />
   <Partners />
+  <BayVideo />
   <Questions />
 </template>
 
