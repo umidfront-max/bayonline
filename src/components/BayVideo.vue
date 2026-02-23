@@ -115,7 +115,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-const youtubeVideoId = ref('xwg9Lf5ruUE')
+const youtubeVideoId = ref('dgXnojtw9lI')
 
 const youtubeEmbedUrl = computed(
   () => `https://www.youtube.com/embed/${youtubeVideoId.value}?autoplay=1`,

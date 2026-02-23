@@ -19,4 +19,10 @@ export default defineConfig({
          '@': fileURLToPath(new URL('./src', import.meta.url))
       },
    },
+   server: {
+      host: '0.0.0.0', // barcha IP manzillardan kirish imkonini beradi
+      port: 5173,      // kerakli port
+      strictPort: true, // agar port band bo‘lsa xatolik beradi
+      open: false,      // avtomatik brauzerni ochmaydi, true qilsa ochadi
+   }
 })
